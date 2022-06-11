@@ -5,7 +5,7 @@
 <script lang="ts">
 import Layout from '@/layout/index.vue';
 import Login from '@/views/login/index.vue';
-import { getCurrentInstance, defineComponent } from 'vue';
+import { getCurrentInstance, defineComponent, watch } from 'vue';
 import { useStore } from 'vuex';
 import store from './store';
 import { api_getUserInfo } from './api/login';
@@ -22,12 +22,15 @@ export default defineComponent({
 
     const $store = useStore();
 
-    getUserInfo();
-    async function getUserInfo() {
-      const { info, token } = $store.state.user;
-      if (!token) return;
-      if (Object.keys(info).length > 0) return;
+    watch(() => $store.state.user.token, value => {
+      value && store.commit('user/set_login', 1);
+    }, { immediate: true })
 
+    watch(() => $store.state.user.login, value => {
+      value === 1 && getUserInfo();
+    }, { immediate: true })
+
+    async function getUserInfo() {
       const response = await api_getUserInfo();
       if (response.code === 200) {
         const { data } = response;

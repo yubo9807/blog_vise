@@ -2,7 +2,7 @@
   <div class="app-wrapper" :class="[$store.state.slider.putAway && 'put-away']">
     <aside>
       <Logo />
-      <Slidebar :list="routes" :hiddenName="compName" />
+      <Slidebar :list="sliderRoutes" :hiddenName="compName" />
     </aside>
     <section>
       <Navbar class="nav" />

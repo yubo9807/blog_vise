@@ -6,13 +6,11 @@
     background-color="transparent"
     :default-active="$route.name"
   >
-    <SliderItem v-for="item in slideList" :key="item.name" :route="item" />
+    <SliderItem v-for="item in list" :key="item.name" :route="item" />
   </el-menu>
 </template>
 
 <script lang="ts">
-import renderMenu from './render-menu';
-import menuOpen from './menu-open';
 import SliderItem from './slider-item.vue';
 
 export default {
@@ -29,16 +27,6 @@ export default {
       type: Number,
       default: 0
     },
-    hiddenName: {  // 要隐藏的菜单
-      type: Array,
-      default: [''] 
-    },
-  },
-  setup() {
-    return {
-      ...renderMenu(),
-      ...menuOpen(),
-    }
   }
 }
 </script>

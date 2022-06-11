@@ -17,6 +17,7 @@ export default () => {
     if (response.code === 200) {
       const { token } = response.data;
       store.commit('user/set_token', { type: VALID, payload: token });
+      store.commit('user/set_login', 1);
       $router.replace('/home');
     }
   }

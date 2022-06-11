@@ -7,42 +7,35 @@ export default () => {
   const $router = useRouter();
   const $store = useStore();
   
-  const newRoutes = ref();
-  const role = $store.state.user.role;
-  const { routes } = $router.options
+  const queryRoute = $router.options.routes.find(val => val.name === 'Layout').children;
 
-  for (let i = 0; i < routes.length; i++) {
-    if (routes[i].name === 'Layout') {
-      newRoutes.value = routes[i].children;
-      continue;
-    }
-  }
+  function dispose(routes: any, role, arr = []) {
+    const newRoutes = Object.assign([], routes);
+    for (let i = 0; i < newRoutes.length; i++) {
+      const { path, name, meta, children } = newRoutes[i];
 
-  // 递归处理侧边栏要显示的路由
-  function dispose(routes: any, role = '') {
-    // console.log(cloneObj(routes))
-    for (let i = 0; i < routes.length; i++) {
-      const meta = routes[i].meta;
-      if (!meta) continue;
-      if (meta?.roles) {
-        const flag = meta.roles.includes(role);
-        if (!flag) routes[i].hidden = true;
+      if (meta.hidden) continue;
+      
+      if (!meta.roles || meta.roles.includes(role)) {
+        arr.push({ path, name, meta });
       }
-      if (routes[i].children) {
-        dispose(routes[i].children, role);
+      if (children && children.length > 0) {
+        const index = arr.findIndex(item => item.name === name);
+        if (index > 0) {
+          arr[index].children = [];
+          dispose(children, role, arr[index].children);
+        };
       }
     }
-    return routes;
+    return arr;
   }
 
-  // const sliderRoutes = ref([]);
-  // watch(() => $store.state.user.role, value => {
-  //   sliderRoutes.value = dispose(newRoutes.value, value);
-  //   console.log(sliderRoutes.value)
-  // })
+  const sliderRoutes = ref([]);
+  watch(() => $store.state.user.role, value => {
+    sliderRoutes.value = dispose(queryRoute, value);
+  })
 
   return {
-    routes: dispose(newRoutes.value, role),
-    // sliderRoutes,
+    sliderRoutes,
   }
 }

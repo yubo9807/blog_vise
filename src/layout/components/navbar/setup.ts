@@ -18,6 +18,8 @@ export default () => {
         type: 'warning',
       }).then(async () => {
         store.commit('user/set_token', { type: OVERDUE });
+        store.commit('user/set_login', 2);
+        store.commit('user/set_info', {});
       }).catch(() => {})
     }
 

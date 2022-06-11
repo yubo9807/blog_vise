@@ -5,18 +5,25 @@ export const OVERDUE = Symbol('overdue');
 const token = 'token';
 
 interface State {
+  login: number
   role: string | number
   token: string
   info: any
 }
 
 const state: State = {
-  role: 'admin',  // 角色
+  login: 0,  // 登录状态  0: 未登录，1: 已登陆，2: 已退出
+  role: '',  // 角色
   token: getCookie(token) || '',  // token 也用来判断是否登录
   info: {},  // 用户信息
 }
 
 const mutations = {
+
+  // 设置登录状态
+  set_login(state: State, value: number) {
+    state.login = value;
+  },
 
   // 设置角色
   set_role(state: State, value: string | number) {
