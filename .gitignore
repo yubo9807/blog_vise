@@ -1,0 +1,11 @@
+node_modules
+.DS_Store
+dist
+vise
+dist-ssr
+
+*.local
+*.log
+*.lock
+*.zip
+*.rar
