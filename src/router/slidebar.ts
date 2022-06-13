@@ -2,6 +2,16 @@ import Layout from '@/layout/index.vue';
 import Home from '@/views/home/index.vue';
 
 /**
+ * key: 后端返回角色
+ * value: 前端权限控制角色
+ */
+export const roleConfig = {
+  'super': 'admin',
+  'user': 'user',
+  'visible': 'visible'
+}
+
+/**
  * 重新配置页面后清一下 LocalStorage
  */
 export default {
@@ -38,37 +48,8 @@ export default {
       path: 'friend-link',
       name: 'FriendLink',
       component: () => import('@/views/friend-link/index.vue'),
-      meta: { title: '友情链接', icon: '&#xe617;', roles: ['admin'] },
+      meta: { title: '友情链接', icon: '&#xe617;', roles: ['admin', 'user'] },
     },
-    // {
-    //   path: 'example',
-    //   name: 'Example',
-    //   component: () => import('@/views/example/index.vue'),  // router4 要求有 children 必须有 component
-    //   redirect: '/example/sub1',
-    //   meta: { title: '例子', icon: '&#xe623;', roles: ['admin'] },
-    //   children: [
-    //     {
-    //       path: 'sub1',
-    //       name: 'ExampleSub1',
-    //       meta: { title: '子页面-1' },
-    //       component: () => import('@/views/example/sub1.vue'),
-    //       children: [
-    //         {
-    //           path: 'grandson1',
-    //           name: 'ExampleSub1Grandson1',
-    //           meta: { title: '孙子页面-1' },
-    //           component: () => import('@/views/example/grandson1.vue'),
-    //         }
-    //       ]
-    //     },
-    //     {
-    //       path: 'sub2',
-    //       name: 'ExampleSub2',
-    //       meta: { title: '子页面-2' },
-    //       component: () => import('@/views/example/sub2.vue'),
-    //     },
-    //   ]
-    // },
     {
       path: 'power-manage',
       name: 'PowerManage',

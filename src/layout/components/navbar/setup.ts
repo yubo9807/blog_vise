@@ -20,6 +20,7 @@ export default () => {
         store.commit('user/set_token', { type: OVERDUE });
         store.commit('user/set_login', 2);
         store.commit('user/set_info', {});
+        store.commit('user/set_role', '');
       }).catch(() => {})
     }
 

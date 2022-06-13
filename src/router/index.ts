@@ -11,7 +11,7 @@ const routes = [
   },
   layout,
   {
-    path: '/:pathMatch(.*)*',
+    path: '/404/:pathMatch(.*)*',
     name: 'NotFound',
     component: import('@/views/not-found/index.vue')
   },

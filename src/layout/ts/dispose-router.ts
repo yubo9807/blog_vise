@@ -31,9 +31,11 @@ export default () => {
   }
 
   const sliderRoutes = ref([]);
-  watch(() => $store.state.user.role, value => {
-    sliderRoutes.value = dispose(queryRoute, value);
-  })
+  watch(() => $store.state.user, value => {
+    const { login, role } = value;
+    if (login === 1) sliderRoutes.value = dispose(queryRoute, role);
+    else sliderRoutes.value = [];
+  }, { deep: true, immediate: true })
 
   return {
     sliderRoutes,
