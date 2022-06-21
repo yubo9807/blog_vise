@@ -7,7 +7,6 @@ export default function routerGuard() {
     const role = store.state.user.role;
     
     const { roles, noCache, title }: any = to.meta;
-    console.log(roles, role)
   
     // 根据角色设置缓存 tabs
     if (!noCache && to.name && title) {

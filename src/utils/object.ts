@@ -1,21 +1,3 @@
-/**
- * 获取一个对象的字节大小
- * @param obj 
- * @returns 
- */
-export function getLSUsedSpace(obj: any) {
-  return Object.keys(obj).reduce((total, curKey) => {
-    if (!obj.hasOwnProperty(curKey)) {
-      return total;
-    }
-    if (typeof obj[curKey] === 'string') {
-      total += obj[curKey].length + curKey.length;
-    } else {
-      total += JSON.stringify(obj[curKey]).replace(/"/g, '').length + curKey.length;
-    }
-    return total;
-  }, 0);
-}
 
 /**
  * 深度克隆对象
@@ -42,4 +24,32 @@ function cloneArray (obj: any[]) {
       result[i] = cloneObj(obj[i]);
   }
   return result;
+}
+
+/**
+ * 获取一个对象的字节大小
+ * @param obj 
+ * @returns 
+ */
+export function getLSUsedSpace(obj: any) {
+
+  const length = Object.keys(obj).reduce((total, curKey) => {
+    if (!obj.hasOwnProperty(curKey)) return total;
+
+    if (typeof obj[curKey] === 'string') total += obj[curKey].length + curKey.length;
+    else total += JSON.stringify(obj[curKey]).replace(/"/g, '').length + curKey.length;
+
+    return total;
+  }, 0);
+
+  const symbolLen = Object.getOwnPropertySymbols(obj).reduce((total, curKey) => {
+    if (!obj.hasOwnProperty(curKey)) return total;
+
+    if (typeof obj[curKey] === 'string') total += obj[curKey].length;
+    else total += JSON.stringify(obj[curKey]).replace(/"/g, '').length;
+
+    return total;
+  }, 0);
+
+  return length + symbolLen;
 }

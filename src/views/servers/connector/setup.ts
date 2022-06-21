@@ -1,5 +1,5 @@
 import { api_getFileListOrContent } from '@/api/file';
-import { ref, watch } from 'vue';
+import { getCurrentInstance, ref, watch } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { calculateByte } from '@/utils/number';
 
@@ -8,8 +8,11 @@ export default () => {
   const $route = useRoute();
   
   const fileList = ref([]);
-  
   getFileList();
+
+  /**
+   * 获取文件列表
+   */
   async function getFileList() {
     const { log } = $route.query;
     const response = await api_getFileListOrContent({ path: '/logs' })
@@ -24,7 +27,13 @@ export default () => {
   }
   
   const fileAttr = ref({});
+
+  const current = getCurrentInstance();
   
+  /**
+   * 获取文件属性
+   * @param path 
+   */
   async function getFileContent(path) {
     const response = await api_getFileListOrContent({ path })
     if (response.code === 200) {
@@ -32,9 +41,21 @@ export default () => {
       fileAttr.value = data;
       $router.replace({ query: { log: data.name } })
     }
+    toBottom();
+  }
+
+  function toBottom() {
+    setTimeout(() => {
+      const ElContent: any = current.refs.content;
+      ElContent.scrollTo({ top: ElContent.scrollHeight, behavior: 'smooth' });
+    }, 0)
   }
 
   const newline = ref(false);
+
+  watch(() => newline.value, value => {
+    if (value) toBottom();
+  })
 
   return {
     fileList,

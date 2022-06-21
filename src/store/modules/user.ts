@@ -1,5 +1,3 @@
-import { getCookie } from "@/utils/cookie";
-
 export const VALID = Symbol('valid');
 export const OVERDUE = Symbol('overdue');
 const TOKEN = 'token';
@@ -15,7 +13,7 @@ interface State {
 const state: State = {
   login: 0,  // 登录状态  0: 未登录，1: 已登陆，2: 已退出
   role: sessionStorage.getItem(ROLE),  // 角色
-  token: getCookie(TOKEN) || '',  // token
+  token: sessionStorage.getItem(TOKEN) || '',  // token
   info: {},  // 用户信息
 }
 
@@ -37,11 +35,11 @@ const mutations = {
     switch (action.type) {
       case VALID:
         state.token = action.payload ?? '';
-        document.cookie = `${TOKEN}=${action.payload};max-age=${60 * 60 * 2}`;
+        sessionStorage.setItem(TOKEN, action.payload);
         break;
       case OVERDUE:
         state.token = '';
-        document.cookie = `${TOKEN}='';max-age=-1`;
+        sessionStorage.removeItem(TOKEN);
         break;
       default:
         return state.token;

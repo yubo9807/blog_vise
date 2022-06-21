@@ -11,10 +11,10 @@ const routes = [
   },
   layout,
   {
-    path: '/404/:pathMatch(.*)*',
+    path: '/:pathMatch(.*)*',
     name: 'NotFound',
-    component: import('@/views/not-found/index.vue')
-  },
+    component: import('@/views/not-found/index.vue'),
+  }
 ]
 
 const router = createRouter({

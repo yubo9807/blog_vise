@@ -1,7 +1,6 @@
 import axios, { AxiosStatic, AxiosResponse, AxiosRequestConfig } from 'axios';
 import { ElMessage, ElNotification, ElMessageBox } from 'element-plus';
 import { axiosRetry } from '@/utils/network';
-import { getCookie } from '@/utils/cookie';
 import env_variable from '~/env_variable';
 import { OVERDUE } from '@/store/modules/user';
 import store from '@/store';
@@ -32,7 +31,7 @@ axiosRetry(instance, {
 // 请求拦截器
 instance.interceptors.request.use(async(config) => {
   // 有 token 的话将其放在 headers 中
-  const authorization = await getCookie('token');
+  const authorization = sessionStorage.getItem('token');
   if (authorization) {
     config.headers.Authorization = authorization;
   }
@@ -99,13 +98,16 @@ function unifiedError(response: SateResponse) {
   if (code >= 400) {  // 错误报给前端开发者
     code < 500 && console.error(Object.assign(data, { url: config.url }));
 
-    if (code === 403) {
+    if ([401, 403].includes(code)) {
       ElMessageBox.confirm('用户信息过期，请重新登录', '警告', {
         confirmButtonText: '确认',
         cancelButtonText: '取消',
         type: 'warning',
       }).then(async () => {
         store.commit('user/set_token', { type: OVERDUE });
+        store.commit('user/set_login', 2);
+        store.commit('user/set_info', {});
+        store.commit('user/set_role', '');
       }).catch(() => {});
       return;
     }

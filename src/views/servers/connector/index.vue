@@ -18,8 +18,8 @@
         <span>{{ calculateByte(fileAttr.size) }}</span>
         <el-link type="primary" :underline="false" @click="newline = !newline">自动换行</el-link>
       </div>
-      <div class="content">
-        <pre :class="[newline ? 'newline' : '']" v-html="fileAttr.content"></pre>
+      <div ref="content" class="content">
+        <pre :class="[newline ? 'newline' : '']">{{ fileAttr.content }}</pre>
       </div>
     </div>
 
@@ -73,9 +73,12 @@ export default defineComponent({
       box-sizing: border-box;
       padding-top: 0;
       color: white;
-      >pre.newline{
-        white-space: pre-wrap;
-        word-break: break-all;
+      > pre{
+        padding-bottom: 200px;
+        &.newline{
+          white-space: pre-wrap;
+          word-break: break-all;
+        }
       }
     }
   }

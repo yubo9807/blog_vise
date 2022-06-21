@@ -1,15 +1,29 @@
 <template>
-  <div>
-    home
+  <div class="home-page">
+    <ChartAccessRecord class="box" />
+    <ChartRedis class="box" />
   </div>
 </template>
 
 <script lang='ts'>
+import ChartAccessRecord from './components/chart-access-record/index.vue';
+import ChartRedis from './components/chart-redis/index.vue';
 export default {
   // name: 'Home',
+  components: {
+    ChartAccessRecord,
+    ChartRedis
+  }
 }
 </script>
 
-<style>
-
+<style lang='scss' scoped>
+.box{
+  height: 400px;
+  padding: 20px;
+  box-sizing: border-box;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,.2);
+  margin-bottom: 14px;
+}
 </style>

@@ -1,0 +1,69 @@
+.note-page{
+
+  // 返回
+  .back{
+    margin-bottom: 8px;
+  }
+
+  // 文件列表
+  .file-list{
+    display: grid;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    grid-template-columns: repeat(auto-fill, 140px);
+    grid-gap: 10px;
+    > li{
+      width: 140px;
+      padding: 10px;
+      box-sizing: border-box;
+      text-align: center;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .icon-folder, .icon-file{
+      font-size: 40px;
+    }
+    .icon-folder{
+      color: #1195db;
+    }
+    .file-name{
+      margin-top: 4px;
+    }
+  }
+
+  // 添加文件
+  .add-file{
+    color: #999;
+    position: relative;
+    .icon-add-file{
+      font-size: 20px;
+      line-height: 64px;
+    }
+    .add-file-box{
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: space-evenly;
+      flex-direction: column;
+      border-radius: 8px;
+      box-sizing: border-box;
+      opacity: 0;
+      transition: opacity .3s;
+      &:hover{
+        opacity: 1;
+        border: 1px dashed;
+      }
+      > p{
+        line-height: 2.8;
+        background: rgba(0,0,0,.4);
+        color: #eee;
+        &:hover{
+          color: #b3d8ff;
+        }
+      }
+    }
+  }
+  
+}
