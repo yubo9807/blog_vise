@@ -40,10 +40,15 @@ instance.interceptors.request.use(async(config) => {
 
 // 响应拦截器
 instance.interceptors.response.use((response: any) => {
-  const { status, data } = response
+  const { status, data } = response;
+
+  if (response.headers && response.headers['content-type'].includes('text/html;')) {
+    ElMessage.error('请求地址错误');
+    return Promise.reject(response);
+  }
 
   if (status) { // 状态码正常
-    unifiedError(response)
+    unifiedError(response);
     return data;
   }
 
