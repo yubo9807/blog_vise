@@ -28,10 +28,6 @@
       "scripthost"
     ]
   },
-  "include": [
-    "src"
-, "env_variable.ts"  ],
-  "exclude": [
-    "node_modules"
-  ]
+  "include": ["src", "env_variable.ts"],
+  "exclude": ["node_modules"]
 }

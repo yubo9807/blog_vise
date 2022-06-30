@@ -1,5 +1,4 @@
 import Layout from '@/layout/index.vue';
-import Home from '@/views/home/index.vue';
 
 /**
  * key: 后端返回角色
@@ -20,7 +19,7 @@ export default {
     {
       path: 'home',
       name: 'Home',
-      component: Home,
+      component: () => import('@/views/home/index.vue'),
       meta: { title: '首页', icon: '&#xe015;' },
     },
     {
