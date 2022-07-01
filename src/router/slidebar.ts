@@ -26,7 +26,7 @@ export default {
       path: 'servers',
       name: 'Servers',
       component: () => import('@/views/servers/index.vue'),
-      meta: { title: '服务器管理', icon: '&#xe001;', roles: ['admin', 'user'] },
+      meta: { title: '服务器', icon: '&#xe001;', roles: ['admin', 'user'] },
       children: [
         {
           path: 'redis',

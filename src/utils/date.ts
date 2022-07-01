@@ -59,3 +59,10 @@ export function getTimeDistance(diff = 0) {
     return Math.floor(diff / 3600 / 24) + '天';
   }
 }
+
+/**
+ * 获取当天 0 点的时间戳
+ */
+export function getNowDayZeroTimestamp() {
+  return new Date(new Date().toDateString()).getTime();
+}

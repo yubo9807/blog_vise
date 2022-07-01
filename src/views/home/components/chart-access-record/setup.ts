@@ -1,5 +1,5 @@
 import { api_getAccessRecordList } from "@/api/access";
-import { dateFormater } from "@/utils/date";
+import { dateFormater, getNowDayZeroTimestamp } from "@/utils/date";
 import { getCurrentInstance, onMounted, ref } from "vue";
 import { init } from 'echarts';
 import option from './option';
@@ -17,8 +17,9 @@ export default () => {
 
   initData();
   async function initData() {
-    const day = Date.now() - 1000 * 60 * 60 * 24 * 7;
-    const startTime = Math.floor(new Date(day).getTime() / 1000);
+    const day = getNowDayZeroTimestamp();
+    const weekAgo = day - 1000 * 60 * 60 * 24 * 6;
+    const startTime = Math.floor(new Date(weekAgo).getTime() / 1000);
     const response = await api_getAccessRecordList({ startTime });
     if (response.code === 200) {
       const { data } = response;
