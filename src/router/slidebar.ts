@@ -23,6 +23,12 @@ export default {
       meta: { title: '首页', icon: '&#xe015;' },
     },
     {
+      path: 'access',
+      name: 'Access',
+      component: () => import('@/views/access/index.vue'),
+      meta: { title: '访客记录', icon: '&#xe005;' },
+    },
+    {
       path: 'servers',
       name: 'Servers',
       component: () => import('@/views/servers/index.vue'),
@@ -47,12 +53,6 @@ export default {
       name: 'Blacklist',
       component: () => import('@/views/blacklist/index.vue'),
       meta: { title: '黑名单', icon: '&#xe00a;', roles: ['admin'] },
-    },
-    {
-      path: 'note',
-      name: 'Note',
-      component: () => import('@/views/note/index.vue'),
-      meta: { title: '学习笔记', icon: '&#xe016;', roles: ['admin'] },
     },
     {
       path: 'users',

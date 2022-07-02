@@ -1,0 +1,48 @@
+
+.menu, .content{
+  float: left;
+}
+.menu{
+  width: 140px;
+}
+.content{
+  width: calc(100% - 140px);
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+}
+
+.menu{
+  max-height: 70vh;
+  overflow-y: auto;
+  > li{
+    line-height: 2;
+    cursor: pointer;
+    &:not(:last-child){
+      border-bottom: 1px solid #eee;
+    }
+    &.active{
+      color: var(--el-color-primary);
+    }
+  }
+}
+
+.record{
+  > li{
+    background: #282c34;
+    color: #ccc;
+    padding: 6px 10px;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    line-height: 1.8;
+    white-space: pre-wrap;
+    word-break: break-all;
+    a{
+      color: var(--el-color-primary);;
+    }
+    strong{
+      display: inline-block;
+      width: 90px;
+      color: #5dd7b9;
+    }
+  }
+}
