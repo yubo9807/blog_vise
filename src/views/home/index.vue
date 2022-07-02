@@ -1,16 +1,19 @@
 <template>
   <div class="home-page">
+    <SystemInfo class="box" />
     <ChartAccessRecord class="box" />
     <ChartRedis class="box" />
   </div>
 </template>
 
 <script lang='ts'>
+import SystemInfo from './components/system-info/index.vue';
 import ChartAccessRecord from './components/chart-access-record/index.vue';
 import ChartRedis from './components/chart-redis/index.vue';
 export default {
   // name: 'Home',
   components: {
+    SystemInfo,
     ChartAccessRecord,
     ChartRedis
   }

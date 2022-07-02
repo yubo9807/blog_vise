@@ -28,7 +28,7 @@ export default {
   series: [
     {
       type: 'line',
-      symbol: 'none',
+      // symbol: 'none',
       smooth: true,
       data: [],
       areaStyle: {

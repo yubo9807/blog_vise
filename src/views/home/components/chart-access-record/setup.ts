@@ -1,15 +1,22 @@
 import { api_getAccessRecordList } from "@/api/access";
-import { dateFormater, getNowDayZeroTimestamp } from "@/utils/date";
+import { getNowDayZeroTimestamp } from "@/utils/date";
 import { getCurrentInstance, onMounted, ref } from "vue";
 import { init } from 'echarts';
 import option from './option';
+import { useRouter } from 'vue-router';
 
 export default () => {
   const current = getCurrentInstance();
-  
+  const $router = useRouter();
+
   let chart = null;
   onMounted(() => {
     chart = init((current.refs.chart as HTMLElement));
+
+    chart.on('click', event => {
+      const year = new Date().getFullYear();
+      $router.push({ name: 'Access', query: { log: year + '-' + event.name + '.log' } });
+    })
   })
 
   
