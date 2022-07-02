@@ -1,22 +1,16 @@
 <template>
   <div class="wrap">
     <div ref="chart" class="chart"></div>
-    <span class="total-size">占用内存：{{ calculateByte(totalSize) }}</span>
+    <span class="total-size">占用内存：{{ totalSize }}</span>
   </div>
 </template>
 
 <script>
 import { defineComponent } from '@vue/runtime-core';
-import main from './setup';
-import { calculateByte } from '@/utils/number';
+import setup from './setup';
 
 export default defineComponent({
-  setup() {
-    return {
-      ...main(),
-      calculateByte
-    }
-  }
+  setup
 })
 </script>
 

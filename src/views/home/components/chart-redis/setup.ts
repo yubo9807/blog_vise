@@ -1,10 +1,22 @@
 import { getCurrentInstance, onMounted, ref } from 'vue';
-import { init } from 'echarts';
+import * as echarts from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { BarChart } from 'echarts/charts';
+import { TitleComponent, GridComponent, TooltipComponent } from 'echarts/components';
 import option from './option';
 import { api_getMemoryRedis } from '@/api/memory';
 import { getLSUsedSpace } from '@/utils/object';
 import { dateFormater, getTimeDistance } from '@/utils/date';
 import { useRouter } from 'vue-router';
+import { calculateByte } from '@/utils/number';
+
+echarts.use([
+  TitleComponent,
+  GridComponent,
+  TooltipComponent,
+  BarChart,
+  CanvasRenderer
+]);
 
 export default () => {
   const current = getCurrentInstance();
@@ -12,22 +24,21 @@ export default () => {
   
   let chart = null;
   onMounted(() => {
-    chart = init((current.refs.chart as HTMLElement));
-
+    chart = echarts.init((current.refs.chart as HTMLElement));
     chart.on('click', event => {
       $router.push({ name: 'ServersRedis', query: { path: event.name } });
     })
   })
 
 
-  const totalSize = ref(0);
+  const totalSize = ref('0');
 
   initData();
   async function initData() {
     const response = await api_getMemoryRedis();
     if (response.code === 200) {
       const { data, size } = response.data;
-      totalSize.value = size;
+      totalSize.value = calculateByte(size);
 
       for (const prop in data) {
         data[prop].size = getLSUsedSpace(data[prop]) + prop.length;

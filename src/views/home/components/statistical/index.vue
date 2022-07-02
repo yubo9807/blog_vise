@@ -1,7 +1,5 @@
 <template>
-  <ul>
-    <li></li>
-  </ul>
+  <div>dasdasdsada</div>
 </template>
 
 <script>

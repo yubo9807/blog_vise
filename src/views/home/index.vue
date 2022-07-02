@@ -7,9 +7,15 @@
 </template>
 
 <script lang='ts'>
+import { defineAsyncComponent } from 'vue';
 import SystemInfo from './components/system-info/index.vue';
-import ChartAccessRecord from './components/chart-access-record/index.vue';
-import ChartRedis from './components/chart-redis/index.vue';
+import { ElLoading } from 'element-plus';
+const ChartAccessRecord = defineAsyncComponent({
+  loader: () => import('./components/chart-access-record/index.vue'),
+  loadingComponent: ElLoading,
+})
+const ChartRedis = defineAsyncComponent(() => import('./components/chart-redis/index.vue'))
+
 export default {
   // name: 'Home',
   components: {

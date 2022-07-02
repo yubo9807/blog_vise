@@ -1,9 +1,20 @@
 import { api_getAccessRecordList } from "@/api/access";
 import { getNowDayZeroTimestamp } from "@/utils/date";
 import { getCurrentInstance, onMounted, ref } from "vue";
-import { init } from 'echarts';
+import * as echarts from 'echarts/core';
+import { CanvasRenderer } from 'echarts/renderers';
+import { LineChart } from 'echarts/charts';
+import { TitleComponent, GridComponent, TooltipComponent } from 'echarts/components';
 import option from './option';
 import { useRouter } from 'vue-router';
+
+echarts.use([
+  TitleComponent,
+  GridComponent,
+  TooltipComponent,
+  LineChart,
+  CanvasRenderer
+]);
 
 export default () => {
   const current = getCurrentInstance();
@@ -11,7 +22,7 @@ export default () => {
 
   let chart = null;
   onMounted(() => {
-    chart = init((current.refs.chart as HTMLElement));
+    chart = echarts.init((current.refs.chart as HTMLElement));
 
     chart.on('click', event => {
       const year = new Date().getFullYear();
