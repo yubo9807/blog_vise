@@ -12,7 +12,7 @@ export default () => {
 
   const form = reactive({
     username: '',
-    passwrod: ''
+    password: ''
   })
 
   async function signIn() {
