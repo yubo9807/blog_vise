@@ -1,7 +1,7 @@
 <template>
   <div class="home-page">
-    <SystemInfo class="box" />
     <ChartAccessRecord class="box" />
+    <SystemInfo class="box" />
     <ChartRedis class="box" />
   </div>
 </template>
@@ -28,7 +28,6 @@ export default {
 
 <style lang='scss' scoped>
 .box{
-  height: 400px;
   padding: 20px;
   box-sizing: border-box;
   border-radius: 8px;

@@ -1,7 +1,6 @@
 <template>
   <div class="wrap">
     <div ref="chart" class="chart"></div>
-    <span class="visitors-number">近一周访问量：{{ visitorsNumber }} 次</span>
   </div>
 </template>
 
@@ -10,13 +9,19 @@ import { defineComponent } from '@vue/runtime-core';
 import setup from './setup';
 
 export default defineComponent({
+  props: {
+    load: {
+      type: Number,
+      default: 0
+    }
+  },
   setup
 })
 </script>
 
 <style lang='scss' scoped>
 .wrap{
-  height: 300px;
+  height: 100%;
   position: relative;
   .chart{
     height: 100%;

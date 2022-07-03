@@ -2,16 +2,18 @@ import { graphic } from 'echarts';
 
 export default {
   grid: {
-    top: '80px',
+    top: '40px',
     right: '0',
-    bottom: '24px',
-    left: '50px',
+    bottom: '10px',
+    left: '30px',
     show: true,
     borderColor: 'transparent'
   },
   title: {
-    text: '站点访客量',
-    subtext: 'Site visitors number'
+    text: 'CPU负载',
+    textStyle: {
+      fontSize: 14,
+    }
   },
   tooltip: {
     trigger: 'axis',
@@ -20,20 +22,27 @@ export default {
     type: 'category',
     boundaryGap: false,
     data: [],
-    axisTick: { show: false }
+    axisTick: { show: false },
+    axisLabel: { showMaxLabel: true, },
+    axisLine: { lineStyle: { color: '#cccccc' }},
   },
   yAxis: {
     type: 'value',
+    max: 100,
   },
   series: [
     {
       type: 'line',
-      // symbol: 'none',
-      smooth: true,
-      data: [],
+      symbol: 'none',
+      // smooth: true,
+      data: [0],
+      lineStyle: {
+        color: 'green',
+        width: 1,
+      },
       areaStyle: {
         color: new graphic.LinearGradient(0, 0, 0, 1, [
-          { offset: 0, color: '#5470C6' },
+          { offset: 0, color: 'green' },
           { offset: 1, color: 'transparent' }
         ])
       },

@@ -16,6 +16,7 @@ export default defineComponent({
 
 <style lang='scss' scoped>
 .wrap{
+  height: 400px;
   position: relative;
   .chart{
     height: 100%;

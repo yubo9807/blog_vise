@@ -56,7 +56,12 @@ export default () => {
         visitorsNumber.value += 1;
       })
       
-      option.xAxis.data = Object.keys(obj);
+      const xAxisData = Object.keys(obj);
+      const emptyStr = '      ', len = xAxisData.length;
+      xAxisData[0] = emptyStr + xAxisData[0];
+      xAxisData[len - 1] = xAxisData[len - 1] + emptyStr;
+
+      option.xAxis.data = xAxisData;
       option.series[0].data = Object.values(obj);
       chart.setOption(option);
     }

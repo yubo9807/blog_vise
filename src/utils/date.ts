@@ -49,15 +49,29 @@ export function getMonthDays(time: string | null = null) {
  * 计算距离当前时间的时间差
  */
 export function getTimeDistance(diff = 0) {
+  let str = '';
   if (diff < 60) {
-    return diff + '秒';
+    str = diff + '秒';
   } else if (diff < 3600) {
-    return Math.floor(diff / 60) + '分钟';
+    const num = 60;
+    const month = Math.floor(diff / num);
+    const remain = diff - num * month;
+    str = month + '分钟';
+    if (remain > 0) str += getTimeDistance(remain);
   } else if (diff < 3600 * 24) {
-    return Math.floor(diff / 3600) + '小时';
+    const num = 3600;
+    const hours = Math.floor(diff / num);
+    const remain = diff - num * hours;
+    str = hours + '小时';
+    if (remain > 0) str += getTimeDistance(remain);
   } else if (diff < 3600 * 24 * 365) {
-    return Math.floor(diff / 3600 / 24) + '天';
+    const num = 3600 * 24;
+    const day = Math.floor(diff / num);
+    const remain = diff - num * day;
+    str = day + '天';
+    if (remain > 0) str += getTimeDistance(remain);
   }
+  return str;
 }
 
 /**

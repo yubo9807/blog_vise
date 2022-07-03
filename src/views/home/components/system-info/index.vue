@@ -1,21 +1,75 @@
 <template>
-  <ul class="system-info">
-    <li v-for="(item, index) in list" :key="index">
-      <strong>{{ item.name }}：</strong>
-      <span>{{ item.value }}</span>
-    </li>
-  </ul>
+  <div class="system-info">
+    <ul class="wrap clearfix">
+      <li>
+        <strong>CPU型号：</strong><span>{{ info.model }}</span>
+      </li>
+      <li>
+        <strong>操作系统：</strong><span>{{ info.type }}</span>
+      </li>
+      <li>
+        <strong>内核版本：</strong><span>{{ info.version }}</span>
+      </li>
+      <li>
+        <strong>系统安全运行时间：</strong><span>{{ getTimeDistance(info.uptime) }}</span>
+      </li>
+    </ul>
+    <div class="charts">
+      <div>
+        <ChartLoad :load="load" />
+      </div>
+      <div>
+        <ChartMemory :memory="memory" />
+      </div>
+    </div>
+  </div>
 </template>
 
 <script lang='ts'>
-import setup from './setup';
+import { defineAsyncComponent } from 'vue';
+const ChartLoad = defineAsyncComponent(() => import('./components/chart-load/index.vue'));
+const ChartMemory = defineAsyncComponent(() => import('./components/chart-memory/index.vue'));
+import main from './setup';
+import { getTimeDistance } from '@/utils/date';
+
 export default {
-  setup
+  components: {
+    ChartMemory,
+    ChartLoad,
+  },
+  setup() {
+    return {
+      ...main(),
+      getTimeDistance
+    }
+  }
 }
 </script>
 
-<style scoped>
-ul.system-info{
-  height: auto;
+<style lang='scss' scoped>
+.system-info{
+
+  > .wrap{
+    letter-spacing: 1.2px;
+    padding-left: 4px;
+    > li{
+      float: left;
+      margin-right: 40px;
+      line-height: 2;
+      max-width: 100%;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+  }
+
+  .charts{
+    display: flex;
+    justify-content: space-between;
+    height: 140px;
+    > div{
+      width: 48%;
+    }
+  }
 }
 </style>
