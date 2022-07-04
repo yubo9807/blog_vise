@@ -64,7 +64,7 @@ export function getTimeDistance(diff = 0) {
     const remain = diff - num * hours;
     str = hours + '小时';
     if (remain > 0) str += getTimeDistance(remain);
-  } else if (diff < 3600 * 24 * 365) {
+  } else {
     const num = 3600 * 24;
     const day = Math.floor(diff / num);
     const remain = diff - num * day;

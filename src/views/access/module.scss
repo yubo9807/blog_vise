@@ -7,8 +7,6 @@
 }
 .content{
   width: calc(100% - 140px);
-  height: calc(100vh - 140px);
-  overflow-y: auto;
 }
 
 .menu{
@@ -26,7 +24,13 @@
   }
 }
 
+.access-number{
+  line-height: 32px;
+}
+
 .record{
+  height: calc(100vh - 160px);
+  overflow-y: auto;
   > li{
     background: #282c34;
     color: #ccc;

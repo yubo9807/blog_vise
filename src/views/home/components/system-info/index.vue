@@ -1,5 +1,6 @@
 <template>
   <div class="system-info">
+
     <ul class="wrap clearfix">
       <li>
         <strong>CPU型号：</strong><span>{{ info.model }}</span>
@@ -11,17 +12,19 @@
         <strong>内核版本：</strong><span>{{ info.version }}</span>
       </li>
       <li>
-        <strong>系统安全运行时间：</strong><span>{{ getTimeDistance(info.uptime) }}</span>
+        <strong>运行时间：</strong><span>{{ getTimeDistance(info.uptime) }}</span>
       </li>
     </ul>
+
     <div class="charts">
       <div>
-        <ChartLoad :load="load" />
+        <ChartLoad :loadList="loadList" />
       </div>
       <div>
-        <ChartMemory :memory="memory" />
+        <ChartMemory :memoryList="memoryList" />
       </div>
     </div>
+
   </div>
 </template>
 
@@ -53,8 +56,6 @@ export default {
     letter-spacing: 1.2px;
     padding-left: 4px;
     > li{
-      float: left;
-      margin-right: 40px;
       line-height: 2;
       max-width: 100%;
       overflow: hidden;

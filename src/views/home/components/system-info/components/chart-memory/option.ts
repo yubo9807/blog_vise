@@ -35,7 +35,7 @@ export default {
       type: 'line',
       symbol: 'none',
       // smooth: true,
-      data: [0],
+      data: [],
       lineStyle: {
         color: 'orange',
         width: 1,

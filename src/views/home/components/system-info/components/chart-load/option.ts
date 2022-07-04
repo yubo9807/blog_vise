@@ -29,13 +29,14 @@ export default {
   yAxis: {
     type: 'value',
     max: 100,
+    minInterval: 25,
   },
   series: [
     {
       type: 'line',
       symbol: 'none',
       // smooth: true,
-      data: [0],
+      data: [],
       lineStyle: {
         color: 'green',
         width: 1,

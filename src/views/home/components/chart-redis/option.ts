@@ -6,7 +6,7 @@ export default {
     top: '80px',
     right: '0',
     bottom: '24px',
-    left: '80px',
+    left: '50px',
     show: true,
     borderColor: 'transparent'
   },

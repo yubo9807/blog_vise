@@ -1,20 +1,28 @@
 <template>
   <div class="home-page">
-    <ChartAccessRecord class="box" />
+    <div class="box">
+      <ChartAccessRecord />
+    </div>
     <SystemInfo class="box" />
-    <ChartRedis class="box" />
+    <div class="box">
+      <ChartRedis />
+    </div>
   </div>
 </template>
 
 <script lang='ts'>
 import { defineAsyncComponent } from 'vue';
 import SystemInfo from './components/system-info/index.vue';
-import { ElLoading } from 'element-plus';
+import Loading from '@/components/loading/index.vue';
+
 const ChartAccessRecord = defineAsyncComponent({
   loader: () => import('./components/chart-access-record/index.vue'),
-  loadingComponent: ElLoading,
+  loadingComponent: Loading,
 })
-const ChartRedis = defineAsyncComponent(() => import('./components/chart-redis/index.vue'))
+const ChartRedis = defineAsyncComponent({
+  loader: () => import('./components/chart-redis/index.vue'),
+  loadingComponent: Loading,
+})
 
 export default {
   // name: 'Home',

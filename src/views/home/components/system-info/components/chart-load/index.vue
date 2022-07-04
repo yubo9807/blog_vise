@@ -10,9 +10,9 @@ import setup from './setup';
 
 export default defineComponent({
   props: {
-    load: {
-      type: Number,
-      default: 0
+    loadList: {
+      type: Array,
+      default: () => []
     }
   },
   setup

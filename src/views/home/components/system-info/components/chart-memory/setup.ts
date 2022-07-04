@@ -18,7 +18,7 @@ export default (props) => {
 
   let chart = null;
 
-  watch(() => props.memory, value => {
+  watch(() => props.memoryList, value => {
     if (!chart) {
       setTimeout(() => {
         chart = echarts.init((current.refs.chart as HTMLElement));
@@ -27,16 +27,10 @@ export default (props) => {
     } else {
       render(value);
     }
-  }, { immediate: true })
+  }, { immediate: true, deep: true })
   
-  function render(value) {
-    const seriesData = Object.assign([], option.series[0].data);
-    if (seriesData.length >= 5) {
-      seriesData.shift();
-    }
-    seriesData.push(value.toFixed(2));
-
-    option.series[0].data = seriesData;
+  function render(value: number[]) {
+    option.series[0].data = value;
     chart.setOption(option);
   }
 
