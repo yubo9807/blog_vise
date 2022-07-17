@@ -9,7 +9,8 @@
         <el-input v-model="form.password" placeholder="请输入密码" type="password" @keyup.enter="signIn" />
       </el-form-item>
     </el-form>
-    <el-button @click="signIn">登录</el-button>
+    <el-button @click="visitorSignIn">访客登录</el-button>
+    <el-button type="primary" @click="signIn">登录</el-button>
   </div>
 </template>
 

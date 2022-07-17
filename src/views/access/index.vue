@@ -16,7 +16,7 @@
     <div class="content">
 
       <!-- 搜索 -->
-      <LayoutBothSides :rightWidth="150" class="header">
+      <LayoutBothSides rightWidth="150px" class="header">
         <template #left>
           <el-input v-model="searchValue" placeholder="请输入URL" />
         </template>

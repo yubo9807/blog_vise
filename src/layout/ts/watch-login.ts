@@ -10,16 +10,26 @@ export default () => {
   const $router = useRouter();
   const $route = useRoute();
 
+
   // 没有 token 返回登陆页
-  (async function() {
-    const token = $store.state.user.token;
-    if (token) {
-      await getUserInfo();
-    } else {
+  const token = $store.state.user.token;
+  if (token) {
+    getUserInfo();
+  } else {
+    exitLayout();
+  }
+
+  // 监听登录状态，退出返回登陆页
+  watch(() => $store.state.user.login, value => {
+    if (value !== 1) {
       exitLayout();
     }
-  }())
+  })
 
+
+  /**
+   * 获取用户信息
+   */
   async function getUserInfo() {
     const userInfo = $store.state.user.info;
     if (Object.keys(userInfo).length > 0) return;
@@ -33,13 +43,6 @@ export default () => {
     }
   }
   
-  // 监听登录状态，退出返回登陆页
-  watch(() => $store.state.user.login, value => {
-    if (value === 2) {
-      exitLayout();
-    }
-  })
-
   /**
    * 退出
    */

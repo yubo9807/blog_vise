@@ -1,9 +1,9 @@
 <template>
   <div ref="wrap" class="clearfix layout-both-sides">
-    <div class="left" :style="{ width: `calc(100% - ${rightWidth}px)`}">
+    <div class="left" :style="{ width: `calc(100% - ${rightWidth})`}">
       <slot name="left" />
     </div>
-    <div ref="right" class="right" :style="{ width: rightWidth + 'px'}">
+    <div ref="right" class="right" :style="{ width: rightWidth}">
       <slot name="right" />
     </div>
   </div>
@@ -13,8 +13,8 @@
 export default {
   props: {
     rightWidth: {
-      type: Number,
-      default: 200
+      type: String,
+      default: '200px'
     }
   }
 }

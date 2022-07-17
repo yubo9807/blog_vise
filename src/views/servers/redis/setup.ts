@@ -14,17 +14,21 @@ export default () => {
     size: '0Byte',
   })
 
-  let backups = null;
+  let backups = null;  // 数据备份
 
 
+  // 监听路由变化，刷新相应数据
   const $route = useRoute();
-
   watch(() => $route.query.path, async(value: string) => {
     if (!backups) await initData();
     if (value) table.value = [ backups.find(val => val.key === value) ];
     else initData();
   }, { immediate: true })
   
+
+  /**
+   * 初始化数据
+   */
   async function initData() {
     const response = await api_getMemoryRedis();
     if (response.code === 200) {
@@ -36,7 +40,7 @@ export default () => {
       for (const key in data) {
         const { createTime, overTime, count, value } = data[key];
         list.push({
-          key,
+          key: unescape(key),
           createTime: dateFormater(createTime),
           cacheTime: overTime === null ? Infinity : getTimeDistance(overTime / 1000),
           overTime: overTime === null ? '-' : dateFormater(createTime + overTime),
@@ -50,6 +54,9 @@ export default () => {
     }
   }
 
+  /**
+   * 清空缓存
+   */
   function clearCache() {
     ElMessageBox.confirm('确认清空 Redis 缓存？', '警告', {
       confirmButtonText: '确认',
@@ -63,6 +70,7 @@ export default () => {
       }
     }).catch(() => {})
   }
+
 
   return {
     table,

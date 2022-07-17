@@ -30,8 +30,16 @@
 
 <script lang='ts'>
 import { defineAsyncComponent } from 'vue';
-const ChartLoad = defineAsyncComponent(() => import('./components/chart-load/index.vue'));
-const ChartMemory = defineAsyncComponent(() => import('./components/chart-memory/index.vue'));
+import Loading from '@/components/loading/index.vue';
+
+const ChartLoad = defineAsyncComponent({
+  loader: () => import('./components/chart-load/index.vue'),
+  loadingComponent: Loading,
+});
+const ChartMemory = defineAsyncComponent({
+  loader: () => import('./components/chart-memory/index.vue'),
+  loadingComponent: Loading,
+});
 import main from './setup';
 import { getTimeDistance } from '@/utils/date';
 

@@ -1,12 +1,12 @@
 // vue
-import { getCurrentInstance, onMounted, ref } from "vue";
+import { getCurrentInstance, onMounted, ref } from 'vue';
 import { useRouter } from 'vue-router';
 
 // api
-import { api_getAccessRecordList } from "@/api/access";
+import { api_getAccessRecordList } from '@/api/access';
 
 // utils
-import { getNowDayZeroTimestamp } from "@/utils/date";
+import { getNowDayZeroTimestamp } from '@/utils/date';
 
 // echarts
 import * as echarts from 'echarts/core';
@@ -39,7 +39,7 @@ export default () => {
     // 点击图标跳转页面
     chart.on('click', event => {
       const year = new Date().getFullYear();
-      $router.push({ name: 'Access', query: { log: year + '-' + event.name + '.log' } });
+      $router.push({ name: 'Access', query: { log: year + '-' + event.name.trim() + '.log' } });
     })
 
   })
@@ -48,10 +48,14 @@ export default () => {
   
   const visitorsNumber = ref(0);  // 访问次数
 
+  /**
+   * 初始化数据
+   */
   (async function() {
+    const dayDuration = 1000 * 60 * 60 * 24;
 
     // 获取六天前 00:00:00 的时间戳
-    const weekAgo = getNowDayZeroTimestamp() - 1000 * 60 * 60 * 24 * 6;
+    const weekAgo = getNowDayZeroTimestamp() - dayDuration * 6;
     const startTime = Math.floor(new Date(weekAgo).getTime() / 1000);
 
     // 获取数据
@@ -62,7 +66,7 @@ export default () => {
       // 近七天日期生成 key 值
       const obj = {}
       for (let i = 6; i >= 0; i--) {
-        const date = new Date(Date.now() - 1000 * 60 * 60 * 24 * i);
+        const date = new Date(Date.now() - dayDuration * i);
         const key = date.getMonth() + 1 + '-' + date.getDate();
         obj[key] = 0;
       }

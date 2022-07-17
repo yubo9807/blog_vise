@@ -1,0 +1,47 @@
+.logs-page{
+  .list, .wrap{
+    float: left;
+  }
+  .list{
+    width: 140px;
+    line-height: 1.8;
+    max-height: calc(100vh - 120px);
+    overflow-y: auto;
+    > li{
+      cursor: pointer;
+      &.active{
+        color: var(--el-color-primary);
+      }
+      &:not(:last-child){
+        border-bottom: 1px solid #eee;
+      }
+    }
+  }
+  .wrap{
+    width: calc(100% - 140px);
+    font-size: 12px;
+    .head{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 6px;
+    }
+    .content{
+      width: 100%;
+      height: calc(100vh - 140px);
+      overflow: auto;
+      border-radius: 4px;
+      padding: 10px;
+      background: #282c34;
+      box-sizing: border-box;
+      padding-top: 0;
+      color: white;
+      > pre{
+        padding-bottom: 20vh;
+        &.newline{
+          white-space: pre-wrap;
+          word-break: break-all;
+        }
+      }
+    }
+  }
+}

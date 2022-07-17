@@ -15,6 +15,9 @@ export default () => {
     password: ''
   })
 
+  /**
+   * 登录
+   */
   async function signIn() {
     const response = await api_signIn(form);
     if (response.code === 200) {
@@ -26,6 +29,9 @@ export default () => {
     }
   }
 
+  /**
+   * 获取用户信息
+   */
   async function getUserInfo() {
     const response = await api_getUserInfo();
     if (response.code === 200) {
@@ -36,9 +42,19 @@ export default () => {
     }
   }
 
+  /**
+   * 访客登录
+   */
+  async function visitorSignIn() {
+    form.username = 'visitor';
+    form.password = '111111';
+    signIn();
+  }
+
   return {
     SYSTEM_NAME: env.SYSTEM_NAME,
     form,
     signIn,
+    visitorSignIn,
   }
 }

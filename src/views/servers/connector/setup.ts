@@ -4,6 +4,8 @@ import { useRoute, useRouter } from 'vue-router';
 import { calculateByte } from '@/utils/number';
 
 export default () => {
+
+  const current = getCurrentInstance();
   const $router = useRouter();
   const $route = useRoute();
   
@@ -26,9 +28,8 @@ export default () => {
     }
   }
   
-  const fileAttr = ref({});
 
-  const current = getCurrentInstance();
+  const fileAttr = ref({});
   
   /**
    * 获取文件属性

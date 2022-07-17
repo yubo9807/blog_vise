@@ -64,7 +64,7 @@ export default {
       path: 'friend-link',
       name: 'FriendLink',
       component: () => import('@/views/friend-link/index.vue'),
-      meta: { title: '友情链接', icon: '&#xe009;', roles: ['admin', 'user'] },
+      meta: { title: '友情链接', icon: '&#xe009;', roles: ['admin'] },
     },
     {
       path: 'power-manage',
