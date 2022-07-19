@@ -13,7 +13,7 @@
     </LayoutBothSides>
 
     <ul class="list-wrap">
-      <li v-for="item in table" :key="item.count">
+      <li v-for="(item, index) in table" :key="index">
         <p class="key" @click="$router.replace({ query: { path: item.key } })">
           <strong>Key：</strong>
           <span>{{ item.key }}</span>

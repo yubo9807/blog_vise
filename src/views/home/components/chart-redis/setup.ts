@@ -60,7 +60,7 @@ export default () => {
       for (const prop in data) {
         const value = data[prop];
 
-        keys.push(unescape(prop));
+        keys.push(decodeURIComponent(prop));
         sizeArr.push(getLSUsedSpace(value) + prop.length);
 
         const cacheTime = value.overTime ? getTimeDistance(value.overTime / 1000) : '不过期';

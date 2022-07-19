@@ -60,7 +60,7 @@ export default () => {
     if (response.code === 200) {
       const { data } = response;
       data.forEach(val => {
-        val.url = decodeURI(val.url);
+        val.url = decodeURIComponent(val.url);
         val.accessTime = dateFormater(val.accessTime * 1000);
       })
       backupsAccessList = data.reverse();

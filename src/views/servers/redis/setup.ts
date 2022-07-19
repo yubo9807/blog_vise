@@ -40,7 +40,7 @@ export default () => {
       for (const key in data) {
         const { createTime, overTime, count, value } = data[key];
         list.push({
-          key: unescape(key),
+          key: decodeURIComponent(key),
           createTime: dateFormater(createTime),
           cacheTime: overTime === null ? Infinity : getTimeDistance(overTime / 1000),
           overTime: overTime === null ? '-' : dateFormater(createTime + overTime),
