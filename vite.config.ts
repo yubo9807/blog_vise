@@ -1,4 +1,5 @@
 import vuePlugin from '@vitejs/plugin-vue';
+import vuejsx from '@vue/babel-plugin-jsx';
 import { defineConfig } from 'vite';
 import path from 'path';
 import env from './env_variable';
@@ -6,6 +7,7 @@ import env from './env_variable';
 export default defineConfig({
 	plugins: [
     vuePlugin(),
+    vuejsx({}),
   ],
 	alias: {
     // 键必须以斜线开始和结束
@@ -16,6 +18,11 @@ export default defineConfig({
   server: {
     open: false,
     port: 3000,
+  },
+  esbuild: {
+    jsxFactory: 'h',
+    jsxFragment: 'Fragment',
+    // jsxInject: "import { h } from 'vue';"
   },
   build: {
     outDir: 'vise',
