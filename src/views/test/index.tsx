@@ -8,6 +8,7 @@ type Id = number | string
 
 interface Organization {
   id: Id
+  parent: Id
   name: string
 }
 interface Staff {
@@ -26,6 +27,7 @@ export default defineComponent(() => {
     { id: 1, parent: null, name: '公司' },
     { id: 2, parent: null, name: '组织-1' },
     { id: 3, parent: 1, name: '组织-2' },
+    { id: 4, parent: 3, name: '组织-2' },
   ])
   // 员工数据
   const staff: Ref<Staff[]> = ref([
@@ -53,8 +55,18 @@ export default defineComponent(() => {
   function exchangeOfPosition(fromEl: HTMLElement, toEl: HTMLElement) {
     if (!fromEl || !toEl) return;
     const from = fromEl.dataset.name;
-    const to = toEl.dataset.name;
-    if(!from || !to) return;
+    let to = toEl.dataset.name;
+
+    // if(!from || !to) return;
+
+    // 组织到最外层，不在任何组织下
+    if (from.length === 1 && !to) {
+      const newOrganization: Organization[] = cloneObj(organization.value);
+      newOrganization[from].parent = null;
+      organization.value = newOrganization;
+      return;
+    }
+
     exchangeData(from.split('-').map(val => Number(val)), to.split('-').map(val => Number(val)));
   }
 
@@ -64,15 +76,33 @@ export default defineComponent(() => {
    * @param to 
    */
   function exchangeData(from: number[], to: number[]) {
-    const newOrganization: any[] = cloneObj(organization.value);
-    const newStaff: any[] = cloneObj(staff.value);
-
+    const newOrganization: Organization[] = cloneObj(organization.value);
+    const newStaff: Staff[] = cloneObj(staff.value);
+    
     // 组织不能到员工下
     if (from.length < to.length) return;
 
     // 调换组织的位置
+    // if (from.length === 1 && to.length === 1) {
+    //   [newOrganization[from[0]], newOrganization[to[0]]] = [newOrganization[to[0]], newOrganization[from[0]]];
+    //   organization.value = newOrganization;
+    //   return;
+    // }
+
+    // 组织到组织下
     if (from.length === 1 && to.length === 1) {
-      [newOrganization[from[0]], newOrganization[to[0]]] = [newOrganization[to[0]], newOrganization[from[0]]];
+      newOrganization[from[0]].parent = newOrganization[to[0]].id;
+
+      // 递归，目标 parent 是否已经包含自己
+      function query(id: Id, parent: Id) {
+        const item = newOrganization.find(val => val.id === id);
+        if (item.parent === null) return false;
+        if (item.id === parent) return true;
+        else return query(item.parent, parent);
+      }
+      const flag = query(newOrganization[to[0]].id, newOrganization[from[0]].id);
+      if (flag) return;
+      
       organization.value = newOrganization;
       return;
     }
@@ -127,7 +157,7 @@ export default defineComponent(() => {
   // #region 添加与删除（组织/员工）
   function addOrganization() {
     const id = Date.now() + '' + randomNum(100000);
-    organization.value.push({ id, name: '' });
+    organization.value.push({ id, name: '', parent: null });
   }
 
   function delOrganization(id: Id) {
@@ -148,36 +178,58 @@ export default defineComponent(() => {
   
 
 
+  // #region 递归组件
+  const Recursive = defineComponent({
+    props: {
+      parent: {
+        type: [null, Number, String],
+        default: null,
+      }
+    },
+    setup(props) {
+      return () => h(<ul>{
+        organization.value.map((val, i) => {
+          if (val.parent !== props.parent) return null;
+          return <li key={i} class={style.box} draggable data-name={i}>
+            <div>
+              <div>组织名称：{val.id}
+                <input type="text" placeholder='请输入组织名称' value={val.name} onChange={(e: any) => val.name = e.target.value} />
+                <span class={style['delete-organization']} onClick={() => delOrganization(val.id)}>X</span>
+              </div>
+
+              {/* 员工列表 */}
+              <ul class={style.icons}>{staff.value.map((item, j) => {
+                if (item.parent === val.id) return <li>=</li>;
+              })}</ul>
+              <ul>{
+                staff.value.map((item, j) => {
+                  if (item.parent !== val.id) return null; 
+                  return <li key={j} draggable data-name={i + '-' + j}>
+                    <ul class={style['staff-info']}>
+                      <li><input type="text" placeholder='请输入员工名称' value={item.name} onChange={(e: any) => item.name = e.target.value} /></li>
+                      <li><input type="text" placeholder='请输入员工年龄' value={item.age} onChange={(e: any) => item.age = e.target.value} /></li>
+                      <li><input type="checkbox" checked={item.activace} onChange={(e: any) => item.activace = e.target.checked} /></li>
+                      <li><input type="checkbox" disabled={!item.activace} checked={item.isAdmin} onChange={(e: any) => item.isAdmin = e.target.checked} /></li>
+                      <li><button onClick={() => delStaff(item.id)}>删除</button></li>
+                    </ul>
+                  </li>;
+                })
+              }</ul>
+              <button onClick={() => addStaff(val.id)}>添加员工</button>
+            </div>
+            <Recursive parent={val.id} />
+          </li>
+        })
+      }</ul>);
+    }
+  });
+  // #endregion
+
+
+
   return () => h(<div ref={organizationEl}>
-    <ul>{
-      organization.value.map((val, i) => <li key={i} class={style.box} draggable data-name={i}>
-        <div>组织名称：
-          <input type="text" placeholder='请输入组织名称' value={val.name} onChange={(e: any) => val.name = e.target.value} />
-          <span class={style['delete-organization']} onClick={() => delOrganization(val.id)}>X</span>
-        </div>
-
-        {/* 员工列表 */}
-        <ul class={style.icons}>{staff.value.map((item, j) => {
-          if (item.parent === val.id) return <li>=</li>;
-        })}</ul>
-        <ul>{
-          staff.value.map((item, j) => {
-            if (item.parent !== val.id) return null; 
-            return <li key={j} draggable data-name={i + '-' + j}>
-              <ul class={style['staff-info']}>
-                <li><input type="text" placeholder='请输入员工名称' value={item.name} onChange={(e: any) => item.name = e.target.value} /></li>
-                <li><input type="text" placeholder='请输入员工年龄' value={item.age} onChange={(e: any) => item.age = e.target.value} /></li>
-                <li><input type="checkbox" checked={item.activace} onChange={(e: any) => item.activace = e.target.checked} /></li>
-                <li><input type="checkbox" disabled={!item.activace} checked={item.isAdmin} onChange={(e: any) => item.isAdmin = e.target.checked} /></li>
-                <li><button onClick={() => delStaff(item.id)}>删除</button></li>
-              </ul>
-            </li>;
-          })
-        }</ul>
-        <button onClick={() => addStaff(val.id)}>+</button>
-
-      </li>)
-    }</ul>
+    <Recursive />
+    
     <button onClick={addOrganization}>+</button>
 
     <div>
