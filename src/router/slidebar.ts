@@ -86,5 +86,11 @@ export default {
         }
       ]
     },
+    {
+      path: 'test',
+      name: 'Test',
+      component: () => import('@/views/test/index'),
+      meta: { title: '测试题' },
+    },
   ]
 }
